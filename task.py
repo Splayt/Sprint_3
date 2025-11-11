@@ -44,11 +44,12 @@ class OnlineSalesRegisterCollector:
         total = 0
         for item in self.__name_items:
             total += self.__item_price[item]
+
         if self.__number_items > 10:
             total *= 0.9
-            return total
-        else:
-            return total    
+        
+        return total
+
 
 #вычисли НДС для товаров со ставкой 20%
 
@@ -58,8 +59,10 @@ class OnlineSalesRegisterCollector:
         for item in self.__name_items:
             if self.__tax_rate.get(item) == 20:
                 total += self.__item_price[item] * 0.2
+                
         if self.__number_items > 10:
-            total *= 0.9       
+            total *= 0.9
+
         return total
 
 #вычисли НДС для товаров со ставкой 10%
@@ -76,17 +79,9 @@ class OnlineSalesRegisterCollector:
 
 #посчитай общую сумму налогов
     def total_tax(self):
-        total_tax_amount = 0
-        for item in self.__name_items:     
-            price = self.__item_price[item]
-            tax_rate = self.__tax_rate[item]
-            if tax_rate == 20:
-                total_tax_amount += price * 0.2
-            elif tax_rate == 10:
-                total_tax_amount += price * 0.1
-        if self.__number_items > 10:
-            total_tax_amount *= 0.9
-
+        tax_20 = self.twenty_percent_tax_calculation()
+        tax_10 = self.ten_percent_tax_calculation()
+        total_tax_amount = tax_20 + tax_10
         return total_tax_amount
 
 #верни номер телефона покупателя
